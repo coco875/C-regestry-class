@@ -1,6 +1,8 @@
-#define class void
+#define NONE(...)
+#define REGISTRY(type, name, ...) void type##_##name_update() {}; \
+    void type##_##name_init() {};
 typedef void* Actor;
 
-    void MyActor_Actor_update(Actor self) {
+    void Actor_MyActor_update(Actor self) {
         printf("MyActor update\n");
     }

@@ -1,6 +1,6 @@
 import re
 
-class_reg = r"class +(\w+)\((\w+)\)"
+class_reg = r"class\( *(\w+) *, *(\w+)"
 function_reg = r"(\w+) +([\w_]+)\(([\w_, *]*)\)"
 
 def transform_file(file:str):
@@ -14,7 +14,7 @@ def transform_file(file:str):
         if re.search(class_reg, lines[i]):
             name, parent = re.search(class_reg, lines[i]).groups()
             line_to_del.append(i)
-        parenthies += lines[i].count('{') - lines[i].count('}')
+        parenthies += lines[i].count('(') - lines[i].count(')')
         if parenthies > 0:
             lines[i] = re.sub(function_reg, rf'\1 {name}_{parent}_\2(\3)', lines[i])
         if parenthies == 0 and parent != '':
